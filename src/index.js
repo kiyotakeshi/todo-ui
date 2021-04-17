@@ -1,9 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore,applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+
 import './index.css';
+import reducer from './reducers';
 import TodoIndex from './components/todo_index';
 
+const store = createStore(reducer, applyMiddleware(thunk));
+
 ReactDOM.render(
-  <TodoIndex />,
-  document.getElementById('root')
+    <Provider store={store}>
+        <TodoIndex />
+    </Provider>,
+    document.getElementById('root')
 );
