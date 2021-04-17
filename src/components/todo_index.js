@@ -20,11 +20,9 @@ class TodoIndex extends Component {
         //         <a href="http://localhost:8082/detail?id=1000">1000: go to supermarket</a>
         //     </li>
         // </ul>
-        <ul>
-          <li>
+          <li key={todo.id}>
             <a href={`${ROOT_URL}/detail?id=${todo.id}`}>{`${todo.id}: ${todo.activityName}`}</a>
           </li>
-        </ul>
       ))
     }
 
@@ -33,7 +31,7 @@ class TodoIndex extends Component {
         return (
             <>
                 {/* <h1>{console.log(Object.keys(this.props.todo))}</h1> */}
-                <h1>{this.renderTodo()}</h1>
+                <ul>{this.renderTodo()}</ul>
             </>
         );
     }
