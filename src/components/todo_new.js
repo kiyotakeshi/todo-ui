@@ -30,13 +30,6 @@ class TodoNew extends Component {
             meta: { touched, error },
         } = field;
 
-        // 一度 form に触れないと validate がかからず、onSubmit(values) の value に含まれず、 null になってしまう
-        // <input name="progress" type="hidden" value="Open">
-        if (field.input.name === 'progress') {
-            input.value = 'Open';
-            // type = 'hidden' // 触れないといけないためこれは使えない
-        }
-
         // console.log(`input.name ${input.name} input.value ${input.value}`); // 入力値を変更するたびに再描画される
         return (
             <div>
@@ -100,14 +93,6 @@ class TodoNew extends Component {
                         ></Field>
                     </div>
                     <div>
-                        <Field
-                            name="progress"
-                            type="text"
-                            component={this.renderField}
-                            // component={this.renderProgress}
-                        ></Field>
-                    </div>
-                    <div>
                         <input
                             type="submit"
                             value="Submit"
@@ -122,7 +107,7 @@ class TodoNew extends Component {
 }
 
 const validate = (values) => {
-    console.log(values); // {activityName: "aaaa", category: "sss", label: "dddd"} // 入力するたびに values が更新される
+    // console.log(values); // {activityName: "aaaa", category: "sss", label: "dddd"} // 入力するたびに values が更新される
     const errors = {};
     if (!values.activityName)
         errors.activityName = 'Enter activity name, please';
