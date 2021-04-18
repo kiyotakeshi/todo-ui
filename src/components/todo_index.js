@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 
-import { readTodo } from '../actions';
+import { getTodos } from '../actions';
 
 class TodoIndex extends Component {
     // constructor(props) {
@@ -54,7 +54,7 @@ const mapStateToProps = (state) => ({ todo: state.todo });
 const mapDispatchToProps = (dispatch) => ({
     // 左側の readTodo は componentDidMount で指定したもの
     // 右側の readTodo() は action creater として actions/index.js で定義しているもの
-    readTodo: () => dispatch(readTodo()),
+    readTodo: () => dispatch(getTodos()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoIndex);

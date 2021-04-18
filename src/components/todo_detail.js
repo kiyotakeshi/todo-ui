@@ -7,13 +7,21 @@ import { Link } from 'react-router-dom';
 import { getTodo, deleteTodo, putTodo } from '../actions';
 
 class TodoDetail extends Component {
+
     constructor(props) {
-        console.log('TodoDetail'); // Routing されてこのコンポーネントが呼ばれているか確認
+        // console.log('TodoDetail'); // Routing されてこのコンポーネントが呼ばれているか確認
         super(props);
         this.onSubmit = this.onSubmit.bind(this);
         // bind を忘れると、 onDeleteClick() メソッドで this.props を参照した際に以下のエラー
         // Cannot read property 'props' of undefined
         this.onDeleteClick = this.onDeleteClick.bind(this);
+    }
+
+    // 直接 http://localhost:3000/todo/10005 などを叩くと、一覧画面のアクセスを行っておらず、 Todo 情報はブラウザのメモリ上にない
+    // 適宜、該当の Todo を api server から取得しないと、画面に表示されない
+    componentDidMount() {
+        const { id } = this.props.match.params;
+        if (id) this.props.getTodo(id);
     }
 
     renderField(field) {
@@ -33,8 +41,11 @@ class TodoDetail extends Component {
         // console.log(`input.name ${input.name} input.value ${input.value}`); // 入力値を変更するたびに再描画される
         return (
             <div>
-                {/* <input name="activityName" value="aaa"> */}
-                <input {...input} placeholder={label} type={type} />
+                {/* TODO: もうちょい見た目なんとかする？ */}
+                <li>
+                    {input.name}{' '}
+                    <input {...input} placeholder={label} type={type} />
+                </li>
                 {/* touched されてエラーの条件に引っ掛かった場合 error の中身を表示 */}
                 {touched && error && <span>{error}</span>}
             </div>
@@ -62,12 +73,21 @@ class TodoDetail extends Component {
         const { handleSubmit } = this.props;
         return (
             <>
-                <h1>Register</h1>
+                <h1>Detail</h1>
                 <form onSubmit={handleSubmit(this.onSubmit)}>
                     <div>
                         <Field
                             label="activity name"
                             name="activityName"
+                            type="text"
+                            component={this.renderField}
+                        ></Field>
+                    </div>
+                    {/* TODO: 選択式にする(Progress の一覧を返すエンドポイント作成 or 固定値で指定) */}
+                    <div>
+                        <Field
+                            label="progress"
+                            name="progress"
                             type="text"
                             component={this.renderField}
                         ></Field>
@@ -126,11 +146,26 @@ const validate = (values) => {
     return errors;
 };
 
-const mapDispatchToProps = { deleteTodo };
+// reducer 側の todo 情報をバインド
+// 現時点の state とこのコンポーネントが持つ props を引数にとる
+const mapStateToProps = (state, ownProps) => {
+    // console.log(state); // {todo: {…}, form: {…}}
+    // console.log(state.todo); // {1000: {…}, 1001: {…}, 1002: {…}, 1003: {…}, 1004: {…}, 1005: {…}, 10002: {…}, 10003: {…}, 10004: {…}, 10005: {…}, 10006: {…}, 10007: {…}}
+    // console.log(ownProps); // {history: {…}, location: {…}, match: {…}, staticContext: undefined}
+    const todo = state.todo[ownProps.match.params.id];
+    return { initialValues: todo, todo };
+};
+
+const mapDispatchToProps = { deleteTodo, getTodo };
 
 // todo に関する状態を描写しないので、 mapStateToProps は null
 export default connect(
-    null,
+    mapStateToProps,
     // null // deleteTodo を実装するまでは仮に null にしておく
     mapDispatchToProps
-)(reduxForm({ validate, form: 'todoDetailForm' })(TodoDetail));
+)(
+    // enableReinitialize を true にすると、 initialValues の prop が変更になるたびに、 form が再度初期化される
+    reduxForm({ validate, form: 'todoDetailForm', enableReinitialize: true })(
+        TodoDetail
+    )
+);
