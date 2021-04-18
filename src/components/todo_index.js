@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 
-import { readTodo, ROOT_URL } from '../actions';
+import { readTodo } from '../actions';
 
 class TodoIndex extends Component {
     // constructor(props) {

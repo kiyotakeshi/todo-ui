@@ -50,9 +50,10 @@ class TodoNew extends Component {
     render() {
         // console.log('render!');
 
-        // `const handleSubmit = this.props.handleSumbit` と同じ
-        // render が実行されたときに渡ってくる関数
-        const { handleSubmit } = this.props;
+        // `const handleSubmit = this.props.handleSumbit` と同じ(render が実行されたときに渡ってくる関数)
+        // pristine は何も入力されていない状態、 submitting は送信中かを示す
+        const { handleSubmit, pristine, submitting } = this.props;
+        // console.log(`pristine:${pristine}, submitting: ${submitting}`);
         return (
             <>
                 <h1>Register</h1>
@@ -96,7 +97,7 @@ class TodoNew extends Component {
                         <input
                             type="submit"
                             value="Submit"
-                            disabled={false}
+                            disabled={pristine || submitting}
                         ></input>
                         <Link to="/">Cancel</Link>
                     </div>
