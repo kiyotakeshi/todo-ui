@@ -21,8 +21,6 @@ class TodoIndex extends Component {
     // todo の一覧を取得し、リスト形式で表示
     renderTodo() {
         return _.map(this.props.todo, (todo) => (
-            // <p key={todo.id}>{todo.id}</p>
-
             // <ul>
             //     <li>
             //         <a href="http://localhost:8082/detail?id=1000">1000: go to supermarket</a>
@@ -30,9 +28,9 @@ class TodoIndex extends Component {
             // </ul>
             <li key={todo.id}>
                 {/* todo の詳細表示へのリンク */}
-                <a
-                    href={`${ROOT_URL}/detail?id=${todo.id}`}
-                >{`${todo.id}: ${todo.activityName}`}</a>
+                <Link
+                    to={`/todo/${todo.id}`}
+                >{`${todo.id} ${todo.activityName}`}</Link>
             </li>
         ));
     }
@@ -43,7 +41,7 @@ class TodoIndex extends Component {
             <>
                 {/* <h1>{console.log(Object.keys(this.props.todo))}</h1> */}
                 <ul>{this.renderTodo()}</ul>
-                <Link to="/register">+</Link> 
+                <Link to="/register">+</Link>
             </>
         );
     }

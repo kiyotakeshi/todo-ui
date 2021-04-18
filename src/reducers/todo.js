@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { READ_TODO } from '../actions';
+import { DELETE_TODO, READ_TODO } from '../actions';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (todo = {}, action) => {
@@ -16,6 +16,10 @@ export default (todo = {}, action) => {
             // "1001": { "id": 1001, "activityName": "listen to music", "progress": "Open", "category": "Hobby", "label": null },
             // }
             return _.mapKeys(action.response.data, 'id');
+        case DELETE_TODO:
+            // console.log(action.id); // action creator(actions/index.js) から値を渡せているか
+            delete todo[action.id]; // 該当のオブジェクトから id を削除
+            return { ...todo }; // 新しいメモリ空間上に配置するために、スプレッド演算子を使用
         default:
             return todo;
     }
