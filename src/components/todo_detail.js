@@ -68,7 +68,7 @@ class TodoDetail extends Component {
 
         // `const handleSubmit = this.props.handleSumbit` と同じ
         // render が実行されたときに渡ってくる関数
-        const { handleSubmit } = this.props;
+        const { handleSubmit, pristine, submitting, invalid } = this.props;
         return (
             <>
                 <h1>Detail</h1>
@@ -120,8 +120,8 @@ class TodoDetail extends Component {
                     <div>
                         <input
                             type="submit"
-                            value="Submit"
-                            disabled={false}
+                            value="Update"
+                            disabled={pristine || submitting || invalid}
                         ></input>
                         <Link to="/">Cancel</Link>
                         <Link to="/" onClick={this.onDeleteClick}>

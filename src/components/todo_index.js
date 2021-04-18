@@ -18,6 +18,7 @@ class TodoIndex extends Component {
         this.props.readTodo();
     }
 
+    // TODO: 全体的に表示を整える
     // todo の一覧を取得し、リスト形式で表示
     renderTodo() {
         return _.map(this.props.todo, (todo) => (
