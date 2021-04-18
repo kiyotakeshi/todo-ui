@@ -42,7 +42,7 @@ class TodoNew extends Component {
     }
 
     async onSubmit(values) {
-        // console.log(values); // {activityName: "ccccc", category: "None", label: "aaa", progress: "Open"}
+        // console.log(values); // {activityName: "ccccc", category: "None", label: "aaa"}
         await this.props.postTodo(values);
         this.props.history.push('/');
     }

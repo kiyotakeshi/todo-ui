@@ -3,6 +3,7 @@ export const READ_TODOS = 'READ_TODOS';
 export const READ_TODO = 'READ_TODO';
 export const CREATE_TODO = 'CREATE_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
+export const UPDATE_TODO = 'UPDATE_TODO';
 
 export const ROOT_URL = 'http://localhost:8081';
 
@@ -28,4 +29,14 @@ export const getTodo = (id) => async (dispatch) => {
     const response = await axios.get(`${ROOT_URL}/api/todo/${id}`);
     console.log(response); // {data: {…}, status: 200, statusText: "", headers: {…}, config: {…}, …}
     dispatch({ type: READ_TODO, response });
+};
+
+export const putTodo = (values) => async (dispatch) => {
+    // console.log(values); // {id: 10005, activityName: "ccccc", progress: "Open", category: "None", label: "aaa"}
+    const response = await axios.put(
+        `${ROOT_URL}/api/todo/${values.id}`,
+        values
+    );
+    // console.log(response);  // {data: {…}, status: 200, statusText: "", headers: {…}, config: {…}, …}
+    dispatch({ type: UPDATE_TODO, response });
 };

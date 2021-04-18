@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { getTodo, deleteTodo, putTodo } from '../actions';
 
 class TodoDetail extends Component {
-
     constructor(props) {
         // console.log('TodoDetail'); // Routing されてこのコンポーネントが呼ばれているか確認
         super(props);
@@ -53,8 +52,7 @@ class TodoDetail extends Component {
     }
 
     async onSubmit(values) {
-        // console.log(values); // {activityName: "ccccc", category: "None", label: "aaa", progress: "Open"}
-        await this.props.postTodo(values);
+        await this.props.putTodo(values);
         this.props.history.push('/');
     }
 
@@ -156,7 +154,7 @@ const mapStateToProps = (state, ownProps) => {
     return { initialValues: todo, todo };
 };
 
-const mapDispatchToProps = { deleteTodo, getTodo };
+const mapDispatchToProps = { deleteTodo, getTodo, putTodo };
 
 // todo に関する状態を描写しないので、 mapStateToProps は null
 export default connect(
