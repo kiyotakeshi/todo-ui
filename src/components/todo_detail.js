@@ -156,7 +156,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = { deleteTodo, getTodo, putTodo };
 
-// todo に関する状態を描写しないので、 mapStateToProps は null
 export default connect(
     mapStateToProps,
     // null // deleteTodo を実装するまでは仮に null にしておく
